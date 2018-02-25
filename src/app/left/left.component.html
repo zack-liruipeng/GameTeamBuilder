@@ -1,0 +1,56 @@
+<form  (submit) = "postleftprofile(name.value,email.value,playerid.value,playstyle.value,platform.value,character.value)">
+<div>
+ 
+<!--name and email-->
+ <label>Your desired name
+ <select #name>
+  <option value="{{profile.name}}">{{profile.name}}</option>
+ </select>
+ </label>
+ </div>
+ 
+ <div>
+ <label>Your email address(Non changeable)
+ <select #email>
+  <option value="{{profile.email}}">{{profile.email}}</option>
+  </select>
+ </label>
+ </div>
+ 
+<!--player id and player style-->
+ <div>
+  <label>Please enter your player id
+  <input type="text" #playerid required>
+  </label>
+  </div>
+ 
+ <div>
+ <label>Please selcet your playstyle
+   <select #playstyle>
+     <option value="0">Select</option>
+     <option *ngFor="let playstyle of playstyles" value="{{playstyle.name}}">{{playstyle.name}}</option>
+   </select>
+  </label> 
+  </div>
+
+<!--platform and characters-->
+  <div>
+  <label>Please selcet your platform
+   <select #platform>
+     <option value="0">Select</option>
+     <option *ngFor="let leftplatform of leftplatforms" value="{{leftplatform.name}}">{{leftplatform.name}}</option>
+   </select>
+  </label>
+  </div>
+  
+  <div>
+  <label>Please selcet your preferred character
+   <select #character>
+     <option value="0">Select</option>
+     <option *ngFor="let leftcharacter of leftcharacters" value="{{leftcharacter.name}}">{{leftcharacter.name}}</option>
+   </select>
+ </label>
+ </div>
+ 
+  <button type="submit" class="btn btn-success btn-lg">Add my game info</button>
+</form>

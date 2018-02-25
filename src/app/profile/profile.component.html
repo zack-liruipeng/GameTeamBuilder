@@ -1,0 +1,405 @@
+<!--post-->
+<div *ngIf="appState == 'new'">
+<h3>Please update your infomation before you go</h3>
+
+<form class="register_form" (submit) ="postuserprofile(name.value,email.value,image.value, age.value,gender.value,timezone.value,microphone.value,weekday.value,weekend.value)">
+ <div>
+ <label>Your desired name
+ <select #name>
+  <option value="{{profile.nickname}}">{{profile.nickname}}</option>
+  </select>
+ </label>
+ </div>
+ 
+ <input type="text" value="{{profile.picture}}" class="hide" #image>
+
+ <div>
+ <label>Your email address(Non changeable)
+ <select #email>
+  <option value="{{profile.email}}">{{profile.email}}</option>
+  </select>
+ </label>
+ </div>
+  
+ <div>
+ <label>Please enter your age
+ <input type="number" class="age" value="1" min="1" max="110" #age>
+ </label>
+ </div>
+
+ <div>
+ <label>Please select your gender
+ <select #gender>
+  <option value="0">Select</option>
+  <option *ngFor="let gender of genders" value="{{gender.name}}">{{gender.name}}</option>
+  </select>
+ </label>
+ </div>
+ 
+ <div>
+ <label>Please select your timezone
+   <select #timezone>
+     <option value="0">Select</option>
+     <option *ngFor="let timezone of timezones" value="{{timezone.name}}">{{timezone.name}}</option>
+   </select>
+ </label>
+ </div>
+
+ <div>
+ <label>Do you have microphone?
+   <select #microphone>
+     <option>Yes</option>
+     <option>No</option>
+   </select>
+ </label>
+ </div>
+ 
+ <div>
+ <label>Your regular play times on weekdays
+   <select #weekday>
+     <option>Morning</option>
+     <option>Afternoon</option>
+      <option>Eveing</option>
+   </select>
+ </label>
+ </div>
+ 
+  <div>
+ <label>Your regular play times on weekends
+   <select #weekend>
+     <option>Morning</option>
+     <option>Afternoon</option>
+      <option>Eveing</option>
+   </select>
+ </label>
+ </div>
+ 
+ <button type="submit" class="btn btn-success btn-lg" value="Post">Save my profile</button>
+ </form>  
+ <button class="btn btn-danger btn-lg" (click)="changeState('gameinfo')">I want ADD my game info</button>
+ <br>
+ <button class="btn btn-lg" (click)="changeState('normal')">I want go back</button>
+</div>
+
+<!--update-->
+<div *ngIf="appState == 'update'">
+<h3>Please update your infomation before you go</h3>
+
+<form class="register_form" (submit) ="updateuserprofile()">
+ <div>
+ <label>Your desired name
+ <select [(ngModel)]="activename" name="activename" #name>
+  <option value="{{profile.nickname}}">{{profile.nickname}}</option>
+  </select>
+ </label>
+ </div>
+ 
+ <div>
+ <label>Your email address(Non changeable)
+ <select [(ngModel)]="activeemail" name="activeemail" #email>
+  <option value="{{profile.email}}">{{profile.email}}</option>
+  </select>
+ </label>
+ </div>
+ 
+ <div>
+ <label>Please upload your picture
+ <image-upload
+ [max]="1"
+ [dropBoxMessage]="'Drop images!'"
+ [maxFileSize]="512000" 
+ (onFileUploadFinish)="imageUploaded($event)"
+ ></image-upload>
+
+ </label>
+ </div>
+  
+ <div>
+ <label>Please enter your age
+ <input type="number" class="age" [(ngModel)]="activeage" name="activeage" value="1" min="1" max="110" #age>
+ </label>
+ </div>
+  
+ <div>
+ <label>Please select your gender
+ <select [(ngModel)]="activegender" name="activegender" #gender>
+  <option value="0">Select</option>
+  <option *ngFor="let gender of genders" value="{{gender.name}}">{{gender.name}}</option>
+  </select>
+ </label>
+ </div>
+ 
+ <div>
+ <label>Please select your timezone
+   <select [(ngModel)]="activetimezone" name="activetimezone" #timezone>
+     <option value="0">Select</option>
+     <option *ngFor="let timezone of timezones" value="{{timezone.name}}">{{timezone.name}}</option>
+   </select>
+ </label>
+ </div>
+
+ <div>
+ <label>Do you have microphone?
+   <select [(ngModel)]="activephone" name="activephone" #microphone>
+     <option>Yes</option>
+     <option>No</option>
+   </select>
+ </label>
+ </div>
+ 
+ <div>
+ <label>Your regular play times on weekdays
+   <select [(ngModel)]="activeweekday" name="activeweekday" #weekday>
+     <option>Morning</option>
+     <option>Afternoon</option>
+      <option>Eveing</option>
+   </select>
+ </label>
+ </div>
+ 
+ <div>
+ <label>Your regular play times on weekends
+   <select [(ngModel)]="activeweekend" name="activeweekend" #weekend>
+     <option>Morning</option>
+     <option>Afternoon</option>
+      <option>Eveing</option>
+   </select>
+ </label>
+ </div>
+ 
+ <button type="submit" class="btn btn-success btn-lg" value="Edit">Save my profile</button>
+ </form>  
+ <br>
+ <button class="btn btn-lg" (click)="changeState('normal')">I want go back</button>
+</div>
+
+<!--normal-->
+<div *ngIf="appState == 'normal'">
+<h2>Welcome, {{profile.nickname}}</h2>
+<img class="img-circle" src="{{profile.picture}}" >
+<h2>Please select your status</h2>
+<button class="btn btn-danger btn-lg" (click)="changeState('new')">I am a new user !</button>
+<button class="btn btn-lg exp" (click)="changeState('default')">Shut up, I am a experienced user!</button>
+</div>
+
+<div *ngIf="appState == 'default'">
+<h3>Account name:{{profile.nickname}}</h3>
+<img class="img-circle" src="{{profile.picture}}" >
+<br>
+<div *ngFor="let userprofile of userprofiles">
+<h4>Age:{{userprofile.age}}</h4>
+<h4>Gender:{{userprofile.gender}}</h4>
+<h4>My timezone:{{userprofile.timezone}}</h4>
+<h4>Microphone:{{userprofile.microphone}}</h4>
+<h4>My regular playtime(weekdays):{{userprofile.weekday}}</h4>
+<h4>My regular playtime(weekdends):{{userprofile.weekend}}</h4>
+</div>
+
+<div *ngFor="let destinyprofile of destinyprofiles">
+<h4>My density playstyle:{{destinyprofile.playstyle}}</h4>
+<h4>My density platform:{{destinyprofile.platform}}</h4>
+<h4>My density playerid:{{destinyprofile.playerid}}</h4>
+<h4>My density best character:{{destinyprofile.character}}</h4>
+</div>
+
+<div *ngFor="let userprofile of userprofiles">
+<button class="btn btn-info btn-lg" (click)="changeState('update', userprofile.$key)">Update my profile</button>
+<br>
+</div>
+
+<a routerLink="../games" ><button class="btn btn-danger btn-lg">Go to game settings</button></a>
+</div>
+
+<!--name info-->
+<div *ngIf="appState == 'gameinfo'">
+  <div *ngFor="let gamename of gamenames">
+   <button class="btn btngame"(click)="changeState(gamename.name)">
+   <h2>{{gamename.name}}</h2>
+ </button>
+ </div>
+ 
+  <button class="btn btn-lg btn-info" (click)="changeState('new')">go back</button>
+</div>
+
+<!--game destiny-->
+<div *ngIf="appState == 'Destiny'">
+<form  (submit) ="postdestinyprofile(name.value,email.value,playerid.value,playstyle.value,platform.value,character.value)">
+ <h2>Destiny profile</h2>
+ <div>
+ <label>Your desired name
+ <select #name>
+  <option value="{{profile.name}}">{{profile.name}}</option>
+ </select>
+ </label>
+ </div>
+ 
+ <div>
+ <label>Your email address(Non changeable)
+ <select #email>
+  <option value="{{profile.email}}">{{profile.email}}</option>
+  </select>
+ </label>
+ </div>
+ 
+  <div>
+  <label>Please enter your player id
+  <input type="text" #playerid required>
+  </label>
+  </div>
+  
+  <div>
+  <label>Please selcet your platform
+   <select #platform>
+     <option value="0">Select</option>
+     <option *ngFor="let destinyplatform of destinyplatforms" value="{{destinyplatform.name}}">{{destinyplatform.name}}</option>
+   </select>
+  </label>
+  </div>
+  
+  <div>
+  <label>Please selcet your preferred character
+   <select #character>
+     <option value="0">Select</option>
+     <option *ngFor="let destinycharacter of destinycharacters" value="{{destinycharacter.name}}">{{destinycharacter.name}}</option>
+   </select>
+ </label>
+ </div>
+ <button type="submit" class="btn btn-success btn-lg" value="Post">Add my game info</button>
+ </form>
+ <br>
+ <button class="btn btn-lg" (click)="changeState('gameinfo')">go back</button>
+</div>
+
+<!--normal-->
+<div *ngIf="appState == 'norma1'">
+<h2>Welcome, {{profile.nickname}}</h2>
+<img class="img-circle" src="{{image}}" >
+<h2>Please select your status</h2>
+<button class="btn btn-danger btn-lg" (click)="changeState('new')">I am a new user !</button>
+<button class="btn btn-lg exp" (click)="changeState('defau1t')">Shut up, I am a experienced user!</button>
+</div>
+
+<div *ngIf="appState == 'defau1t'">
+<h3>Account name:{{profile.nickname}}</h3>
+<img class="img-circle" src="{{image}}" >
+<br>
+<div *ngFor="let userprofile of userprofiles">
+<h4>Age:{{userprofile.age}}</h4>
+<h4>Gender:{{userprofile.gender}}</h4>
+<h4>My timezone:{{userprofile.timezone}}</h4>
+<h4>Microphone:{{userprofile.microphone}}</h4>
+<h4>My regular playtime(weekdays):{{userprofile.weekday}}</h4>
+<h4>My regular playtime(weekdends):{{userprofile.weekend}}</h4>
+<h4>{{userprofile.$key}}</h4>
+</div>
+
+<div *ngFor="let destinyprofile of destinyprofiles">
+<h4>My density playstyle:{{destinyprofile.playstyle}}</h4>
+<h4>My density platform:{{destinyprofile.platform}}</h4>
+<h4>My density playerid:{{destinyprofile.playerid}}</h4>
+<h4>My density best character:{{destinyprofile.character}}</h4>
+</div>
+</div>
+
+<!--game wow-->
+<div *ngIf="appState == 'World of Warcraft'">
+ <h2>World of Warcraft profile</h2>
+ <form  (submit) = "postwowprofile(name.value,email.value,playerid.value,playstyle.value,platform.value,character.value)">
+ <div>
+ <label>Your desired name
+ <select #name>
+  <option value="{{profile.name}}">{{profile.name}}</option>
+ </select>
+ </label>
+ </div>
+ 
+ <div>
+ <label>Your email address(Non changeable)
+ <select #email>
+  <option value="{{profile.email}}">{{profile.email}}</option>
+  </select>
+ </label>
+ </div>
+ 
+ <div>
+  <label>Please enter your player id
+  <input type="text" #playerid required>
+  </label>
+  </div>
+ 
+ <div>
+ <label>Please selcet your playstyle
+   <select #playstyle>
+     <option value="0">Select</option>
+     <option *ngFor="let playstyle of playstyles" value="{{playstyle.name}}">{{playstyle.name}}</option>
+   </select>
+  </label> 
+  </div>
+  
+  <div>
+  <label>Please selcet your platform
+   <select #platform>
+     <option value="0">Select</option>
+     <option *ngFor="let wowplatform of wowplatforms" value="{{wowplatform.name}}">{{wowplatform.name}}</option>
+   </select>
+  </label>
+  </div>
+  
+  <div>
+  <label>Please selcet your preferred character
+   <select #character>
+     <option value="0">Select</option>
+     <option *ngFor="let wowcharacter of wowcharacters" value="{{wowcharacter.name}}">{{wowcharacter.name}}</option>
+   </select>
+ </label>
+ </div>
+ 
+ <button type="submit" class="btn btn-success btn-lg" value="Post">Add my game info</button>
+ </form>
+ <br>
+ <button class="btn btn-lg" (click)="changeState('gameinfo')">go back</button>
+</div>
+
+<!--game left-->
+ <div *ngIf="appState == 'Left 4 Dead 2'">
+ <app-left></app-left>
+ <br>
+ <button class="btn btn-lg" (click)="changeState('gameinfo')">go back</button>
+</div>
+
+
+<!--game diablo-->
+ <div *ngIf="appState == 'Diablo 3'">
+ <h2>Diablo 3 profile</h2>
+ <div>
+ <label>Please selcet your playstyle
+   <select #playstyle>
+     <option value="0">Select</option>
+     <option *ngFor="let playstyle of playstyles" value="{{playstyle.name}}">{{playstyle.name}}</option>
+   </select>
+  </label> 
+  </div>
+  
+  <div>
+  <label>Please selcet your platform
+   <select #platform>
+     <option value="0">Select</option>
+     <option *ngFor="let diabloplatform of diabloplatforms" value="{{diabloplatform.name}}">{{diabloplatform.name}}</option>
+   </select>
+  </label>
+  </div>
+  
+  <div>
+  <label>Please selcet your preferred character
+   <select #character>
+     <option value="0">Select</option>
+     <option *ngFor="let diablocharacter of diablocharacters" value="{{diablocharacter.name}}">{{diablocharacter.name}}</option>
+   </select>
+ </label>
+ </div>
+ 
+ <button class="btn btn-success btn-lg" (click)="adddestinyprofile">Add my game info</button>
+ <br>
+ <button class="btn btn-lg" (click)="changeState('gameinfo')">go back</button>
+</div>
+ 

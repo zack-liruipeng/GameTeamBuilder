@@ -1,0 +1,27 @@
+button{
+    width:auto;
+    margin-top: 0px;
+    margin-left: 0px;
+}
+th {
+    text-align: center;
+}
+.box{
+    width:800px;
+    margin-left: 25%;
+    text-align: left;
+}
+.type {
+    margin-left:120px;
+}
+
+.platform{
+    margin-left:85px;
+}
+.description{
+    width:675px;
+}
+
+.post{
+    margin-left: 10px;
+}

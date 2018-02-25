@@ -1,0 +1,22 @@
+#content{
+    border:1px solid black;
+    text-align:center;
+}
+
+.content_list{
+    margin:20px;
+}
+
+button {
+    margin-top: 10px;
+}
+
+.login{
+    width: 400px;
+    margin-top: 20px;
+}
+
+.sebm-google-map-container {
+  height: 300px;
+  width: 500;
+}

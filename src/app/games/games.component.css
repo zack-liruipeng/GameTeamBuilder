@@ -1,0 +1,39 @@
+img {
+    height:100px;
+    width: 500px;
+}
+.game_box {
+    background-color: white;
+    width:515px;
+    height:250px;
+    float:right;
+    margin-top:20px;
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 12px 20px 0 rgba(0, 0, 0, 0.19);
+}
+#game_content {
+    width:1100;
+    margin-right: 15%;
+}
+
+h2 {
+    font-weight: bold;
+}
+
+ol {
+    list-style-type: none;
+}
+
+li {
+    font-size: large;
+    text-align: center;
+    margin-right: 50px;
+    font-weight: bold;
+}
+
+h1 {
+    color:red;
+}
+
+#title{
+    font-size: xx-large;
+}

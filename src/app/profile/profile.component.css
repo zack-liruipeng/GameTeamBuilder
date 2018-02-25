@@ -1,0 +1,26 @@
+.register_form{
+
+    font-size: large;
+    padding-top: 10px;
+}
+
+.age{
+    width:50px;
+}
+div{
+     padding-top: 10px;
+}
+
+img {
+    height:200px;
+    width: 200px;
+}
+
+.avator{
+    margin-left: 130px;
+}
+
+.exp {
+    background-color: orange;
+    color:white;
+}

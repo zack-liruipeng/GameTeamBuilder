@@ -1,0 +1,31 @@
+img {
+    height:40px;
+    width: 40px;
+    margin: 10px;
+}
+
+.inputcheck {
+    font-size: small;
+}
+input {
+    color: lightgrey;
+}
+
+p {
+    margin-top: 10px;
+}
+
+.third_party{
+    font-size: small;
+    font-weight: bold;
+    width:auto;
+    border:1px solid white;
+}
+
+form {
+    font-size: x-large;
+}
+
+button{
+    margin-top: 10px;
+}

@@ -1,0 +1,190 @@
+   <button (click)="changeState('pastrequest')" *ngIf="auth.authenticated()">Show my past request</button>
+   <button (click)="changeState('normal')" *ngIf="auth.authenticated() && appState == 'pastrequest' " >Hide my past request</button>
+   
+<!--this part shows user's own request-->
+
+    <div *ngIf="appState == 'pastrequest'">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Game</th>
+            <th>Platform</th>
+            <th>Type of team</th>
+            <th>Match/Event</th>
+            <th>Start time</th>
+            <th>Duration</th>
+            <th>Short description</th>
+          </tr>  
+        </thead>
+        
+        <tbody>
+          <tr *ngFor="let myrequest of myrequests">
+            <td>{{myrequest.game}}</td> 
+            <td>{{myrequest.platform}}</td>
+            <td>{{myrequest.type}}</td>  
+            <td>{{myrequest.mort}}</td>
+            <td>{{myrequest.time | date:"yy/MM/dd HH:mm Z"}}</td>
+            <td>{{myrequest.duration}}</td>  
+            <td>{{myrequest.description}}</td>  
+            <td><button class="btn btn-success"(click)="changeState('edit', myrequest.$key)">Edit</button>
+                <button class="btn btn-danger" (click)="deleterequest(myrequest.$key)" >Delete</button></td>  
+          </tr>  
+        </tbody>
+      </table>  
+    </div>
+
+<!--start -->
+    <div>
+        <button (click)="changeState('add')" class="left post btn btn-primary" *ngIf="auth.authenticated()">Post request</button> 
+    </div>
+    <!--filters-->
+    <div class="right">
+        <label> 
+            <select (change)="filterPlatform(filteredPlatform.value)" #filteredPlatform>
+                <option value="0">Filter by Platform</option>
+                <option *ngFor="let platform of platforms" value="{{platform.name}}">{{platform.name}}</option>
+            </select>
+        </label>
+        
+         <label> 
+            <select (change)="filterGamename(filteredGamename.value)" #filteredGamename>
+                <option>Filter by Game</option>
+                <option *ngFor="let gamename of gamenames" value="{{gamename.name}}">{{gamename.name}}</option>
+            </select>
+        </label>
+        
+        <label *ngIf="auth.authenticated()"> 
+            <select (change)="filterTime(filteredtime.value)" #filteredtime>
+                <option value="0">Filter by Preferenced time</option>
+                <option *ngFor="let timezone of timezones" value="{{timezone.name}}">{{timezone.name}}</option>
+            </select>
+        </label>
+    </div>
+    
+    <!--post-->
+    <br>
+    <div *ngIf="appState == 'add'">
+      <h3>Post request</h3>
+      <form (submit) ="postrequest(name.value, email.value, game.value,platform.value,type.value,mort.value,time.value,timezone.value,duration.value,description.value)">
+       <div class="box">
+            <input class="hide" value="{{profile.nickname}}" #name>
+            <input class="hide" value="{{profile.email}}" #email>
+
+           <label>Game name
+           <select #game>
+              <option *ngFor="let gamename of gamenames" value="{{gamename.name}}">{{gamename.name}}</option>
+           </select>
+           </label>
+           
+           <label class="platform">Platform
+           <select #platform>
+              <option *ngFor="let platform of platforms" value="{{platform.name}}">{{platform.name}}</option>
+           </select>
+           </label>
+           
+           <label class="type">Type
+           <select #type>
+              <option *ngFor="let type of types" value="{{type.name}}">{{type.name}}</option>
+           </select>
+           </label>
+           
+           <label class="right">Match event
+           <input type="text" placeholder="Enter match or event" #mort>
+           </label>
+           <br>
+           <label>Start time
+           <input type="datetime-local" #time>
+           </label>
+           
+           <input type="text" class="hide" value="PDT" #timezone>
+           
+           <label>Duration
+           <input type="text" placeholder="Enter how long" #duration>
+           </label>
+           
+           <label>Short Description
+           <input type="text" #description>
+           </label>
+           
+           <br>
+           <input type="submit" class="btn btn-block btn-success btn-large" value="Post">
+       </div>  
+      </form>
+    </div>
+    
+    
+     <!--edit-->
+    <div *ngIf="appState == 'edit'">
+      <h3>Edit request</h3>
+      <form (submit) ="updaterequest()">
+       <div class="box">
+           <label>Game name
+           <select [(ngModel)]="activegame" name="activegame" #game>
+              <option *ngFor="let gamename of gamenames" value="{{gamename.name}}">{{gamename.name}}</option>
+           </select>
+           </label>
+           
+           <label class="platform">Platform
+           <select [(ngModel)]="activeplatform" name="activeplatform" #platform>
+              <option *ngFor="let platform of platforms" value="{{platform.name}}">{{platform.name}}</option>
+           </select>
+           </label>
+           
+           <label class="type">Type
+           <select [(ngModel)]="activetype" name="activetype" #type>
+              <option *ngFor="let type of types" value="{{type.name}}">{{type.name}}</option>
+           </select>
+           </label>
+           <br>
+           <label class="right">Match event
+           <input type="text" [(ngModel)]="activemort" name="activemort" placeholder="Enter match or event" #mort>
+           </label>
+         
+           <label>Start time
+           <input type="datetime-local" [(ngModel)]="activetime" name="activetime" #time>
+           </label>
+           <label>Duration
+           <input type="text" [(ngModel)]="activeduration" name="activeduration" placeholder="Enter how long" #duration>
+           </label>
+           <label>Short Description
+           <input type="textarea" [(ngModel)]="activedescription" name="activedescription" class="description" #description>
+           </label>
+           
+           <br>
+           <input type="submit" class="btn btn-block btn-success btn-large" value="Edit">
+       </div>  
+      </form>
+    </div>
+    
+    <!--table of content-->
+    <div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Game</th>
+            <th>Platform</th>
+            <th>Type of team</th>
+            <th>Match/Event</th>
+            <th>Start time</th>
+            <th>Timezone</th>
+            <th>Duration</th>
+            <th>Short description</th>
+          </tr>  
+        </thead>
+        
+        <tbody>
+          <tr *ngFor="let request of requests">
+            <td>{{request.game}}</td> 
+            <td>{{request.platform}}</td>
+            <td>{{request.type}}</td>  
+            <td>{{request.mort}}</td>
+            <td>{{request.time | date:"yy/MM/dd HH:mm"}}</td>
+            <td>{{request.timezone}}</td>
+            <td>{{request.duration}}</td>  
+            <td>{{request.description}}</td>  
+            <td>
+                <button class="btn btn-danger" (click)="deleterequest(request.$key)" *ngIf="auth.authenticated()">Delete</button></td>  
+          </tr>  
+        </tbody>
+      </table>  
+    </div>      

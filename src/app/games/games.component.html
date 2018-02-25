@@ -1,0 +1,81 @@
+<p id="title">Avaliable Games</p>
+
+<!--DESTINY-->
+<div *ngIf="appState == 'Destiny'">
+ <h3>DESTINY player lists( Member count: {{destinyusercount}} )</h3>
+ <h1 *ngIf="!auth.authenticated()">Please register to see who is seeking for members in Destiny</h1>
+ <div *ngIf="auth.authenticated()">
+ <ol *ngFor="let destinyuser of destinyusers">
+  <li>{{destinyuser.name}}</li>
+ </ol>
+ 
+ <div *ngFor="let destinyprofile of destinyprofiles">
+ <button class="btn btn-success btn-lg" (click)="adddestinylist(destinyprofile.playerid)">Add to user list</button>
+ </div>
+ </div>
+</div>
+
+<!--WOW-->
+<div *ngIf="appState == 'World of Warcraft'">
+ <h3>World of Warcraft player lists( Member count: {{wowusercount}} )</h3>
+ <h1 *ngIf="!auth.authenticated()">Please register to see who is seeking for members in World of Warcraft</h1>
+ <div *ngIf="auth.authenticated()">
+ 
+ <ol *ngFor="let wowuser of wowusers">
+  <li>{{wowuser.name}}</li>
+ </ol>
+ 
+ <div *ngFor="let wowprofile of wowprofiles">
+ <button class="btn btn-success btn-lg" (click)="addwowlist(wowprofile.playerid)">Add to user list</button>
+ </div>
+ </div>
+</div>
+
+<!--Left-->
+<div *ngIf="appState == 'Left 4 Dead 2'">
+ <h3>Left 4 dead 2 player lists ( Member count: {{leftusercount}} ) </h3>
+ <h1 *ngIf="!auth.authenticated()">Please register to see who is seeking for members in Left 4 dead 2</h1>
+ <div *ngIf="auth.authenticated()">
+ <ol *ngFor="let leftuser of leftusers">
+  <li>{{leftuser.name}}</li>
+ </ol>
+ 
+ <div *ngFor="let leftprofile of leftprofiles">
+ <button class="btn btn-success btn-lg" (click)="addleftlist(leftprofile.playerid)">Add to user list</button>
+ </div>
+ </div>
+</div>
+
+<!--Diablo3-->
+<div *ngIf="appState == 'Diablo 3'">
+ <h3>Diablo 3 player lists ( Member count: {{diablousercount}} ) </h3>
+ <h1 *ngIf="!auth.authenticated()">Please register to see who is seeking for members in Diablo 3</h1>
+ <div *ngIf="auth.authenticated()">
+
+  <ol *ngFor="let diablouser of diablousers">
+  <li>{{diablouser.name}}</li>
+ </ol>
+ 
+ <div *ngFor="let diabloprofile of diabloprofiles">
+ <button class="btn btn-success btn-lg" (click)="adddiablolist(diabloprofile.playerid)">Add to user list</button>
+ </div>
+ </div>
+</div>
+
+<!--display all game infomation-->
+<div id="game_content">
+  <div *ngFor="let game of games | async">
+   <button class="game_box" (click)="changeState(game.name)">  <img src="{{game.image}}" alt="{{game.name}} image" >  
+    <h2>{{game.name}}</h2>
+   <div *ngIf="auth.authenticated()">
+   
+    <h5>Avaliable platforms: {{game.Platforms}}</h5>
+    <h5>Avaliable characters: {{game.characters}} </h5>
+   </div>
+ </button>
+   
+  </div>
+
+</div>
+
+

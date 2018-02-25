@@ -1,0 +1,39 @@
+  <h1>LOGIN</h1>
+  
+  <form>
+  <div>
+  <img src="./assets/img/username.png" alt="username" /><input type="text" ngModel name="username" #username="ngModel" required value="Username">
+  <div *ngIf="username.touched && !username.valid" class="alert inputcheck alert-danger">Username is required.</div>
+  </div>
+  
+  <div>
+  <img src="./assets/img/password.png" alt="password" /><input type="password" ngModel name="password" #password="ngModel" required>
+  <div *ngIf="password.touched && !password.valid" class="alert inputcheck alert-danger">Password is required.</div>
+  </div>
+  
+    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+   <button  disabled="loading" class="btn btn-success btn-lg" type="submit">Login</button>
+  </form>
+  
+  <a routerLink="../reset"><button class="btn btn-info btn-lg">Reset password</button></a>
+  
+  <p>_____OR_____</p>
+  
+  <div>
+  <button class="third_party btn-default" type="submit" (click)="facebooklogin()" ><img src="./assets/img/facebook.png" alt="Facebook"  /><br />Facebook</button>
+  <button class="third_party btn-default" type="submit"><img src="./assets/img/google.png" alt="Google"  /><br />Google</button>
+  <button class="third_party btn-default" type="submit"><img src="./assets/img/steam.png" alt="Steam"  /><br />Steam</button>
+  </div>
+  
+  <a routerLink="../register"><button class="btn btn-danger btn-lg" type="submit">{{register}}</button></a>
+  
+  
+  <div>
+      <sebm-google-map [latitude]="lat" [longitude]="lng">  
+      <sebm-google-map-marker [latitude]="lat" [longitude]="lng"></sebm-google-map-marker> 
+      </sebm-google-map> 
+</div>
+
+
+  
+  
